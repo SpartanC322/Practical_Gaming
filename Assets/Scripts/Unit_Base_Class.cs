@@ -16,7 +16,6 @@ public class Unit_Base_Class : MonoBehaviour
     void Start()
     {
         my_animator = GetComponent<Animator>();
-        MoveToPosition(new Vector3(10, 0, 10));
     }
 
     // Update is called once per frame
@@ -36,11 +35,8 @@ public class Unit_Base_Class : MonoBehaviour
                     my_animator.SetBool("is_walking", false);
                 }
                 break;
-
-        }
-        
+        } 
     }
-
 
     internal void MoveToPosition(Vector3 destination)
     {
@@ -52,8 +48,6 @@ public class Unit_Base_Class : MonoBehaviour
             transform.LookAt(destination);
             my_destination = destination;
             timer = 0f;
-
         }
-
     }
 }
