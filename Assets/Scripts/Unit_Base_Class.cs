@@ -10,7 +10,7 @@ public class Unit_Base_Class : MonoBehaviour
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
-    private float MOVE_TIME = 1.0f;
+    private float MOVE_TIME = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,6 @@ public class Unit_Base_Class : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         switch (currently)
         {
             case Unit_State.Moving:

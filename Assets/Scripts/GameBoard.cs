@@ -20,7 +20,6 @@ public class GameBoard
                 BoardPosition new_ground = the_ground.AddComponent<BoardPosition>();
                 the_board[i, j] = new_ground;
                 new_ground.you_are_at(i, j, this);
-
             }
     }
 
