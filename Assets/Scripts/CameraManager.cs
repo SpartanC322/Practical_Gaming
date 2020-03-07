@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     private float current_speed = 6;
-    float camera_horz_angle = 2;
+    float camera_horz_angle = 0;
     Vector3 camera_look_direction;
 
     public float dragSpeed = 2;
@@ -39,20 +39,6 @@ public class CameraManager : MonoBehaviour
         {
             drag_camera();
         }
-
-        //Copied, modify for own use later
-        // if (Input.GetMouseButtonDown(2))
-        // {
-        //    dragOrigin = Input.mousePosition;
-        //     return;
-        // }
-
-        //if(!Input.GetMouseButton(2)) return;
-
-        //  Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        //  Vector3 move = new Vector3(pos.x * dragSpeed, 0, pos.y * dragSpeed);
-
-        //  transform.Translate(move, Space.World);
     }
 
     Quaternion look_rotation()
@@ -96,7 +82,7 @@ public class CameraManager : MonoBehaviour
 
     private void move_forward()
     {
-        transform.position += current_speed * transform.forward * Time.deltaTime;
+        transform.position += current_speed * transform.up * Time.deltaTime;
     }
 
     private bool should_move_forward()

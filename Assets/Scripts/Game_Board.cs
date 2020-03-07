@@ -7,13 +7,13 @@ public class GameBoard
 
     BoardPosition[,] the_board;
     private int BOARD_WIDTH = 100;
-    private int BOARD_DEPTH = 100;
+    private int BOARD_LENGTH = 100;
 
     public GameBoard()
     {
-        the_board = new BoardPosition[BOARD_WIDTH, BOARD_DEPTH];
+        the_board = new BoardPosition[BOARD_WIDTH, BOARD_LENGTH];
         for (int i = 0; i < BOARD_WIDTH; i++)
-            for (int j = 0; j < BOARD_DEPTH; j++)
+            for (int j = 0; j < BOARD_LENGTH; j++)
             {
                 GameObject the_ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 the_ground.transform.position = get_tile_position(i, j);

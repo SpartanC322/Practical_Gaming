@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Unit_Base_Class : MonoBehaviour
 {
-    enum Unit_State { Stationary, Moving, Fighting}
+    enum Unit_State { Stationary, Moving, Attacking }
     Animator my_animator;
     Unit_State currently = Unit_State.Stationary;
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
     private float MOVE_TIME = 1.5f;
+    private int move_spaces = 10;
+    private int unit_health = 100;
+    int unit_damage = Random.Range(5, 15);
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +36,14 @@ public class Unit_Base_Class : MonoBehaviour
                     currently = Unit_State.Stationary;
                     my_animator.SetBool("is_walking", false);
                 }
+                break;
+
+            case Unit_State.Stationary:
+
+                break;
+
+            case Unit_State.Attacking:
+
                 break;
         } 
     }
