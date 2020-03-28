@@ -3,14 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class Camera_Manager : MonoBehaviour
 {
-    private float current_speed = 6;
-    float camera_horz_angle = 0;
-    Vector3 camera_look_direction;
-
-    public float dragSpeed = 2;
-    private Vector3 dragOrigin;
+    private float current_speed = 20;
+    private float camera_horz_angle = 0;
+    private Vector3 camera_look_direction;
 
     // Start is called before the first frame update
     void Start()
@@ -28,36 +25,12 @@ public class CameraManager : MonoBehaviour
         if (should_turn_left()) turn_left();
         if (should_turn_right()) turn_right();
         transform.rotation = look_rotation();
-
-        if (should_drag_camera())
-        {
-            dragOrigin = Input.mousePosition;
-            return;
-        }
-
-        if (should_drag_camera())
-        {
-            drag_camera();
-        }
     }
 
     Quaternion look_rotation()
     {
         camera_look_direction = new Vector3(Mathf.Cos(camera_horz_angle), -0.5f, Mathf.Sin(camera_horz_angle));
         return Quaternion.LookRotation(camera_look_direction, Vector3.up);
-    }
-
-    private void drag_camera()
-    {
-        Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - dragOrigin);
-        Vector3 move = new Vector3(pos.x * dragSpeed, 0, pos.y * dragSpeed);
-
-        transform.Translate(move, Space.World);
-    }
-
-    private bool should_drag_camera()
-    {
-        return Input.GetMouseButton(2);
     }
 
     private void move_right()
@@ -82,7 +55,7 @@ public class CameraManager : MonoBehaviour
 
     private void move_forward()
     {
-        transform.position += current_speed * transform.up * Time.deltaTime;
+        transform.position += current_speed * transform.forward * Time.deltaTime;
     }
 
     private bool should_move_forward()

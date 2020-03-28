@@ -17,7 +17,7 @@ public class CameraControl : MonoBehaviour
         
     }
 
-    internal void follow(CharacterMovement characterMovement)
+    internal void follow(Character_Movement characterMovement)
     {
         transform.parent = characterMovement.transform;
     }

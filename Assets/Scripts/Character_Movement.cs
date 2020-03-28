@@ -3,53 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterMovement : MonoBehaviour
+public class Character_Movement : MonoBehaviour
 {
-    bool is_idling = true;
     private float current_speed = 1;
     private float turning_speed = 90;
-    CameraControl my_camera;
-    Animator myAnimation;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        myAnimation = GetComponent<Animator>();
-        my_camera = FindObjectOfType<CameraControl>();
+        //my_camera = FindObjectOfType<CameraControl>();
 
-        my_camera.follow(this);
+        //my_camera.follow(this);
     }
 
     // Update is called once per frame
     void Update()
     {
         if (should_walk_forward()) walk_forward();
-        else
-            stop_walking();
         if (should_sprint_forward()) sprint_forward();
-        else
-            stop_sprinting_forward();
         if (should_turn_left()) turn_left();
         if (should_turn_right()) turn_right();
         if (should_walk_backward()) walk_backward();
-        else
-            stop_walking_backward();
         if (should_disconnect_camera()) disconnect_camera();
-    }
-
-    private void stop_sprinting_forward()
-    {
-        myAnimation.SetBool("is_sprinting", false);
-    }
-
-    private void stop_walking()
-    {
-        myAnimation.SetBool("is_walking", false);
-    }
-
-    private void stop_walking_backward()
-    {
-        myAnimation.SetBool("is_walking_backward", false);
     }
 
     private bool should_disconnect_camera()
@@ -84,8 +60,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void walk_backward()
     {
-        is_idling = false;
-        myAnimation.SetBool("is_walking_backward", true);
         transform.position -= current_speed * transform.forward * Time.deltaTime;
     }
 
@@ -101,15 +75,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void sprint_forward()
     {
-        is_idling = false;
-        myAnimation.SetBool("is_sprinting", true);
         transform.position += current_speed * 2 * transform.forward * Time.deltaTime;
     }
 
     private void walk_forward()
     {
-        is_idling = false;
-        myAnimation.SetBool("is_walking", true);
         transform.position += current_speed * transform.forward * Time.deltaTime;
     }
 
@@ -118,5 +88,5 @@ public class CharacterMovement : MonoBehaviour
         return Input.GetKey(KeyCode.W);
     }
 
-  
+
 }

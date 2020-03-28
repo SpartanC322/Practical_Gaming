@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Game_Manager : MonoBehaviour
 {
-    GameBoard the_board;
+    Game_Board the_board;
     Unit_Base_Class currently_selected_unit;
+    float distanceToDestination;
 
     // Start is called before the first frame update
     void Start()
     {
         currently_selected_unit = FindObjectOfType<Unit_Base_Class>();
-        the_board = new GameBoard();
+        the_board = new Game_Board();
     }
 
     // Update is called once per frame
@@ -30,13 +31,25 @@ public class Game_Manager : MonoBehaviour
                 }
 
 
-                BoardPosition selected_cell =  hit.transform.GetComponent<BoardPosition>();
+                Board_Position selected_cell = hit.transform.GetComponent<Board_Position>();
                 if (selected_cell)
                 {
-                    currently_selected_unit.MoveToPosition(selected_cell.unit_position());
-                    selected_cell.highlight();
+                    distanceToDestination = Vector3.Distance(selected_cell.transform.position, currently_selected_unit.transform.position);
+                    Debug.Log("Distance: " + distanceToDestination);
+
+                    if (distanceToDestination <= 10)
+                    {
+                        currently_selected_unit.MoveToPosition(selected_cell.unit_position());
+                        selected_cell.highlight();
+                    }
+
+                    else
+                    {
+                        Debug.Log("Too far");
+                    }
+
                 }
-             
+
             }
         }
     }

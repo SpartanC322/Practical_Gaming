@@ -7,13 +7,16 @@ public class Unit_Base_Class : MonoBehaviour
     enum Unit_State { Stationary, Moving, Attacking }
     Animator my_animator;
     Unit_State currently = Unit_State.Stationary;
+
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
-    private float MOVE_TIME = 1.5f;
-    private int move_spaces = 10;
-    private int unit_health = 100;
+    private float move_speed = 1.5f;
+    
+
     int unit_damage = Random.Range(5, 15);
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,9 +31,9 @@ public class Unit_Base_Class : MonoBehaviour
         {
             case Unit_State.Moving:
 
-                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/MOVE_TIME);
+                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/move_speed);
                 timer += Time.deltaTime;
-                if (timer > MOVE_TIME)
+                if (timer > move_speed)
                 {
                     transform.position = my_destination;
                     currently = Unit_State.Stationary;
@@ -47,6 +50,8 @@ public class Unit_Base_Class : MonoBehaviour
                 break;
         } 
     }
+
+
 
     internal void MoveToPosition(Vector3 destination)
     {
