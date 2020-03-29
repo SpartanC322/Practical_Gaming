@@ -7,13 +7,10 @@ public class Unit_Base_Class : MonoBehaviour
     enum Unit_State { Stationary, Moving, Attacking }
     Animator my_animator;
     Unit_State currently = Unit_State.Stationary;
-
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
     private float move_speed = 1.5f;
-    
-
     int unit_damage = Random.Range(5, 15);
 
 
