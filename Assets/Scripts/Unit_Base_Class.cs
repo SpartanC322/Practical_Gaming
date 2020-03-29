@@ -51,8 +51,6 @@ public class Unit_Base_Class : MonoBehaviour
         } 
     }
 
-
-
     internal void MoveToPosition(Vector3 destination)
     {
         if (currently == Unit_State.Stationary)

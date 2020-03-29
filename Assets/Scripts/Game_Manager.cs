@@ -30,7 +30,6 @@ public class Game_Manager : MonoBehaviour
                     currently_selected_unit = unit_selected;
                 }
 
-
                 Board_Position selected_cell = hit.transform.GetComponent<Board_Position>();
                 if (selected_cell)
                 {
