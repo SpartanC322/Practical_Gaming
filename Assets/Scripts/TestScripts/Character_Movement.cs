@@ -7,14 +7,15 @@ public class Character_Movement : MonoBehaviour
 {
     private float current_speed = 1;
     private float turning_speed = 90;
+    private Camera_Control_Test my_camera;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //my_camera = FindObjectOfType<CameraControl>();
+        //my_camera = FindObjectOfType<Camera_Control_Test>();
 
-        //my_camera.follow(this);
+       // my_camera.follow(this);
     }
 
     // Update is called once per frame

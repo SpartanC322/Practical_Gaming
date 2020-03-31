@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraControl : MonoBehaviour
+public class Camera_Control_Test : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -17,8 +17,8 @@ public class CameraControl : MonoBehaviour
         
     }
 
-    internal void follow(Character_Movement characterMovement)
+    internal void follow(Camera_Manager camera_Manager)
     {
-        transform.parent = characterMovement.transform;
+        transform.parent = camera_Manager.transform;
     }
 }

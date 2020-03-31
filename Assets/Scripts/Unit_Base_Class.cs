@@ -10,10 +10,18 @@ public class Unit_Base_Class : MonoBehaviour
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
-    private float move_speed = 1.5f;
-    int unit_damage = Random.Range(5, 15);
+    private float MOVE_TIME = 1.5f;
 
+    public int health = 100;//Lines 15 - 19 added by RM
+    public string unitClass = "Normal";
+    public int damage = 10;
+    public int distanceCanMove = 15;
+    public int attackRange = 3;
 
+  
+   
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -24,13 +32,20 @@ public class Unit_Base_Class : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if(health < 1)//RM
+        {
+            Destroy(this.gameObject);
+        }
+        
+
         switch (currently)
         {
             case Unit_State.Moving:
 
-                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/move_speed);
+                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/MOVE_TIME);
                 timer += Time.deltaTime;
-                if (timer > move_speed)
+                if (timer > MOVE_TIME)
                 {
                     transform.position = my_destination;
                     currently = Unit_State.Stationary;
