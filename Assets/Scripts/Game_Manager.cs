@@ -6,10 +6,10 @@ public class Game_Manager : MonoBehaviour
 {
     Game_Board the_board;
     Unit_Base_Class currently_selected_unit;
-    float distanceToDestination;
     Ray ray;
     RaycastHit hit;
     Unit_Base_Class targetUnit;
+    float distanceToDestination;
     float distanceToTarget;
     int damageModifier; //RM
 
@@ -23,10 +23,8 @@ public class Game_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);//RM
         
-
         if (Input.GetMouseButtonUp(0))
         {
             RaycastHit hit;
@@ -38,7 +36,6 @@ public class Game_Manager : MonoBehaviour
                 {
                     currently_selected_unit = unit_selected;
                 }
-
 
                 Board_Position selected_cell =  hit.transform.GetComponent<Board_Position>();
                 if (selected_cell)
@@ -55,19 +52,17 @@ public class Game_Manager : MonoBehaviour
                     else
                     {
                         Debug.Log("Too far");
-                    }
-                    
-                }
-             
+                    }   
+                }     
             }
-        }//end of input.getMouseButtonUP()
+        }
 
-        if (Physics.Raycast(ray, out hit))//Lines 65 - 102 added by RM
+        if (Physics.Raycast(ray, out hit))
         {
             targetUnit = hit.collider.GetComponent<Unit_Base_Class>();
-            //print(targetUnit);
 
-            if (Input.GetMouseButtonDown(1))//1 = right click
+            if (Input.GetMouseButtonDown(1))
+                //MouseButton 1 is a right click
             {
                 if(targetUnit.GetComponent<Unit_Base_Class>() != null)
                 {
@@ -102,8 +97,8 @@ public class Game_Manager : MonoBehaviour
                     {
                         print("Target too far");
                     }
-                }//end of targetUnit exists
-            }//end of mouse right click
-        }//end of raycast check 
+                }
+            }
+        }
     }
 }
