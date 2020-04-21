@@ -8,25 +8,36 @@ public class Game_Manager : MonoBehaviour
     Unit_Base_Class currently_selected_unit;
     Ray ray;
     RaycastHit hit;
-    Unit_Base_Class targetUnit;
+    Unit_Base_Class target_Unit;
     float distanceToDestination;
-    float distanceToTarget;
-    int damageModifier; //RM
+    float distance_To_Target;
+    int damage_Modifier;
+    Class_Select_UI my_Class_Select_UI;
 
     // Start is called before the first frame update
     void Start()
     {
         currently_selected_unit = FindObjectOfType<Unit_Base_Class>();
         the_board = new Game_Board();
+
+        my_Class_Select_UI = FindObjectOfType<Class_Select_UI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        ray = Camera.main.ScreenPointToRay(Input.mousePosition);//RM
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         
         if (Input.GetMouseButtonUp(0))
         {
+
+            if(!currently_selected_unit.class_Selected)
+            {
+                my_Class_Select_UI = FindObjectOfType<Class_Select_UI>();
+
+                my_Class_Select_UI.show_UI();
+            }
+
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -43,7 +54,7 @@ public class Game_Manager : MonoBehaviour
                     distanceToDestination = Vector3.Distance(selected_cell.transform.position, currently_selected_unit.transform.position);
                     Debug.Log("Distance: " + distanceToDestination);
 
-                    if (distanceToDestination <= currently_selected_unit.distanceCanMove)
+                    if (distanceToDestination <= currently_selected_unit.distance_Can_Move)
                     {
                         currently_selected_unit.MoveToPosition(selected_cell.unit_position());
                         selected_cell.highlight();
@@ -59,36 +70,36 @@ public class Game_Manager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            targetUnit = hit.collider.GetComponent<Unit_Base_Class>();
+            target_Unit = hit.collider.GetComponent<Unit_Base_Class>();
 
             if (Input.GetMouseButtonDown(1))
                 //MouseButton 1 is a right click
             {
-                if(targetUnit.GetComponent<Unit_Base_Class>() != null)
+                if(target_Unit.GetComponent<Unit_Base_Class>() != null)
                 {
-                    damageModifier = Random.Range(5, 10);
-                    distanceToTarget = Vector3.Distance(currently_selected_unit.transform.position, targetUnit.transform.position);
+                    damage_Modifier = Random.Range(5, 10);
+                    distance_To_Target = Vector3.Distance(currently_selected_unit.transform.position, target_Unit.transform.position);
 
-                    if(distanceToTarget <= currently_selected_unit.attackRange)
+                    if(distance_To_Target <= currently_selected_unit.attackRange)
                     {
                         if(currently_selected_unit.unitClass == "Range")
                         {
-                            if(distanceToTarget < 2)
+                            if(distance_To_Target < 2)
                             {
                                 print("Ranger is too close");
                             }
 
                             else
                             {
-                                targetUnit.health -= currently_selected_unit.damage + damageModifier;
+                                target_Unit.health -= currently_selected_unit.damage + damage_Modifier;
                                 print("That's a lot of damage!");
                             }
-                        }//if class is Range
+                        }//end of if class is Range
 
                         else
                         {
                             //Class is not range
-                            targetUnit.health -= currently_selected_unit.damage + damageModifier;
+                            target_Unit.health -= currently_selected_unit.damage + damage_Modifier;
                             print("That's a lot of damage!");
                         }
                     }
@@ -100,5 +111,27 @@ public class Game_Manager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public void chose_Normal_Class()
+    {
+        currently_selected_unit.normal_Class();
+
+        currently_selected_unit.class_Selected = true;
+    }
+
+    public void chose_Range_Class()
+    {
+        currently_selected_unit.range_Class();
+
+        currently_selected_unit.class_Selected = true;
+    }
+
+    public void chose_Heavy_Class()
+    {
+        currently_selected_unit.heavy_Class();
+
+        currently_selected_unit.class_Selected = true;
     }
 }

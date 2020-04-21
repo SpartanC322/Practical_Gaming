@@ -12,17 +12,47 @@ public class Unit_Base_Class : MonoBehaviour
     private float timer;
     private float MOVE_TIME = 1.5f;
 
-    public int health = 100;//Lines 15 - 19 added by RM
+    public int health = 100;
     public string unitClass = "Normal";
     public int damage = 10;
-    public int distanceCanMove = 15;
+    public int distance_Can_Move = 15;
     public int attackRange = 3;
 
+    public bool class_Selected = false;
+
+    public void normal_Class()
+    {
+        //sets stats to normal class stats
+        unitClass = "Normal";
+        health = 100;
+        damage = 10;
+        distance_Can_Move = 10;
+        attackRange = 2;
+
+    }
+
+    public void range_Class()
+    {
+        //sets stats to range class stats
+        unitClass = "Range";
+        health = 100;
+        damage = 5;
+        distance_Can_Move = 10;
+        attackRange = 5;
+
+    }
+
+    public void heavy_Class()
+    {
+        //sets stats to heavy class stats
+        unitClass = "Heavy";
+        health = 150;
+        damage = 15;
+        distance_Can_Move = 5;
+        attackRange = 2;
+    }
+
   
-   
-
-    
-
     // Start is called before the first frame update
     void Start()
     {
