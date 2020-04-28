@@ -11,14 +11,13 @@ public class Unit_Base_Class : MonoBehaviour
     private Vector3 my_destination;
     private float timer;
     private float MOVE_TIME = 1.5f;
-
+    public bool player_2;
     public int health = 100;
     public string unitClass = "Normal";
     public int damage = 10;
-    public int distance_Can_Move = 15;
+    public int distanceCanMove = 15;
     public int attackRange = 3;
-
-    public bool class_Selected = false;
+    public bool classSelected = false;
 
     public void normal_Class()
     {
@@ -26,9 +25,8 @@ public class Unit_Base_Class : MonoBehaviour
         unitClass = "Normal";
         health = 100;
         damage = 10;
-        distance_Can_Move = 10;
+        distanceCanMove = 10;
         attackRange = 2;
-
     }
 
     public void range_Class()
@@ -37,9 +35,8 @@ public class Unit_Base_Class : MonoBehaviour
         unitClass = "Range";
         health = 100;
         damage = 5;
-        distance_Can_Move = 10;
+        distanceCanMove = 10;
         attackRange = 5;
-
     }
 
     public void heavy_Class()
@@ -48,8 +45,18 @@ public class Unit_Base_Class : MonoBehaviour
         unitClass = "Heavy";
         health = 150;
         damage = 15;
-        distance_Can_Move = 5;
+        distanceCanMove = 5;
         attackRange = 2;
+    }
+    
+    public void set_Player_2()
+    {
+        player_2 = true;
+    }
+
+    public bool get_Player_2()
+    {
+        return player_2;
     }
 
   
@@ -63,7 +70,7 @@ public class Unit_Base_Class : MonoBehaviour
     void Update()
     {
 
-        if(health < 1)//RM
+        if(health < 1)
         {
             Destroy(this.gameObject);
         }
