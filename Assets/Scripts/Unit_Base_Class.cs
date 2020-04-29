@@ -4,49 +4,52 @@ using UnityEngine;
 
 public class Unit_Base_Class : MonoBehaviour
 {
+
     enum Unit_State { Stationary, Moving, Attacking }
     Animator my_animator;
     Unit_State currently = Unit_State.Stationary;
     private Vector3 my_starting_position;
     private Vector3 my_destination;
     private float timer;
-    private float MOVE_TIME = 1.5f;
-    public bool player_2;
-    public int health = 100;
-    public string unitClass = "Normal";
+    private float move_time = 1.5f;
+    private bool player_2;
+    public bool class_Selected = false;
+    private bool has_moved = true;
+    private int health = 100;
     public int damage = 10;
-    public int distanceCanMove = 15;
-    public int attackRange = 3;
-    public bool classSelected = false;
+    public int distance_can_move = 15;
+    public int attack_Range = 3;
+    public string unit_class = "Normal";
+ 
 
     public void normal_Class()
     {
         //sets stats to normal class stats
-        unitClass = "Normal";
+        unit_class = "Normal";
         health = 100;
         damage = 10;
-        distanceCanMove = 10;
-        attackRange = 2;
+        distance_can_move = 10;
+        attack_Range = 2;
     }
 
     public void range_Class()
     {
         //sets stats to range class stats
-        unitClass = "Range";
+        unit_class = "Range";
         health = 100;
         damage = 5;
-        distanceCanMove = 10;
-        attackRange = 5;
+        distance_can_move = 10;
+        attack_Range = 5;
     }
 
     public void heavy_Class()
     {
         //sets stats to heavy class stats
-        unitClass = "Heavy";
+        unit_class = "Heavy";
         health = 150;
         damage = 15;
-        distanceCanMove = 5;
-        attackRange = 2;
+        distance_can_move = 5;
+        attack_Range = 2;
     }
     
     public void set_Player_2()
@@ -59,6 +62,30 @@ public class Unit_Base_Class : MonoBehaviour
         return player_2;
     }
 
+    public void set_Health(int new_Health)
+    {
+        health = new_Health;
+    }
+
+    public int get_Health()
+    {
+        return health;
+    }
+
+    public void has_Moved()
+    {
+        has_moved = true;
+    }
+
+    public void has_Not_Moved()
+    {
+        has_moved = false;
+    }
+
+    public bool has_It_Moved()
+    {
+        return has_moved;
+    }
   
     // Start is called before the first frame update
     void Start()
@@ -69,24 +96,23 @@ public class Unit_Base_Class : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if(health < 1)
         {
             Destroy(this.gameObject);
         }
         
-
         switch (currently)
         {
             case Unit_State.Moving:
 
-                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/MOVE_TIME);
+                transform.position = Vector3.Lerp(my_starting_position, my_destination, timer/move_time);
                 timer += Time.deltaTime;
-                if (timer > MOVE_TIME)
+                if (timer > move_time)
                 {
                     transform.position = my_destination;
                     currently = Unit_State.Stationary;
                     my_animator.SetBool("is_walking", false);
+                    has_Moved();
                 }
                 break;
 
@@ -110,6 +136,7 @@ public class Unit_Base_Class : MonoBehaviour
             transform.LookAt(destination);
             my_destination = destination;
             timer = 0f;
+            has_moved = true;
         }
     }
 }

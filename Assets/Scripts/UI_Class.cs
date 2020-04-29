@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class UI_Class : MonoBehaviour
 {
-    Game_Manager myGameManager;
+    Game_Manager manager;
     public CanvasGroup Turn_UI;
     public Button End_Turn;
-    int state;
 
     // Start is called before the first frame update
     void Start()
     {
-        myGameManager = FindObjectOfType<Game_Manager>();
+        manager = FindObjectOfType<Game_Manager>();
         End_Turn.onClick.AddListener(turn_End);
     }
 
@@ -25,22 +24,15 @@ public class UI_Class : MonoBehaviour
 
     public void turn_End()
     {
-        if (state == 0)
+        if (manager.get_state() == 1)
         {
-            state = 1;
-            myGameManager.set_Manager_State(state);
+            manager.set_state(2);
+            manager.set_Manager_State(manager.get_state());
         }
-        else if (state == 1)
+        else if (manager.get_state() == 2)
         {
-            state = 2;
-            myGameManager.set_Manager_State(state);
+            manager.set_state(0);
+            manager.set_Manager_State(manager.get_state());
         }
-        else if (state == 2)
-        {
-            state = 1;
-            myGameManager.set_Manager_State(state);
-        }
-
-        Debug.Log(state);
     }
 }

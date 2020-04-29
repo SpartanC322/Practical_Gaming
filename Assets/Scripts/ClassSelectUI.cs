@@ -9,7 +9,6 @@ public class ClassSelectUI : MonoBehaviour
     public Button normalClassBtn;
     public Button rangeClassBtn;
     public Button heavyClassbtn;
-
     Game_Manager myGameManager;
 
     // Start is called before the first frame update
