@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Game_Board
 {
-
     Board_Position[,] the_board;
     private int BOARD_WIDTH = 50;
     private int BOARD_LENGTH = 50;

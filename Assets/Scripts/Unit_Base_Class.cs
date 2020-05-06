@@ -2,90 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit_Base_Class : MonoBehaviour
+public abstract class Unit_Base_Class : MonoBehaviour, Unit_Interface
 {
-
-    enum Unit_State { Stationary, Moving, Attacking }
-    Animator my_animator;
-    Unit_State currently = Unit_State.Stationary;
-    private Vector3 my_starting_position;
-    private Vector3 my_destination;
-    private float timer;
-    private float move_time = 1.5f;
-    private bool player_2;
-    public bool class_Selected = false;
-    private bool has_moved = true;
-    private int health = 100;
-    public int damage = 10;
-    public int distance_can_move = 15;
-    public int attack_Range = 3;
-    public string unit_class = "Normal";
+    protected enum Unit_State { Stationary, Moving, Attacking }
+    protected Animator my_animator;
+    protected Unit_State currently = Unit_State.Stationary;
+    protected Vector3 my_starting_position;
+    protected Vector3 my_destination;
+    protected float timer;
+    protected float move_time = 1.5f;
+    protected bool player_2;
+    protected bool class_Is_Selected = false;
+    protected bool has_moved = true;
+    protected int health = 100;
+    protected int damage;
+    protected int distance_can_move;
+    protected int attack_range;
+    protected string unit_class;
  
+    public abstract void Set_Heavy();
 
-    public void normal_Class()
-    {
-        //sets stats to normal class stats
-        unit_class = "Normal";
-        health = 100;
-        damage = 10;
-        distance_can_move = 10;
-        attack_Range = 2;
-    }
+    public abstract void Set_Normal();
 
-    public void range_Class()
-    {
-        //sets stats to range class stats
-        unit_class = "Range";
-        health = 100;
-        damage = 5;
-        distance_can_move = 10;
-        attack_Range = 5;
-    }
-
-    public void heavy_Class()
-    {
-        //sets stats to heavy class stats
-        unit_class = "Heavy";
-        health = 150;
-        damage = 15;
-        distance_can_move = 5;
-        attack_Range = 2;
-    }
+    public abstract void Set_Ranged();
     
-    public void set_Player_2()
-    {
-        player_2 = true;
-    }
+    public abstract void set_Player_2();
 
-    public bool get_Player_2()
-    {
-        return player_2;
-    }
+    public abstract bool get_Player_2();
 
-    public void set_Health(int new_Health)
-    {
-        health = new_Health;
-    }
+    public abstract void set_Health(int new_Health);
 
-    public int get_Health()
-    {
-        return health;
-    }
+    public abstract int get_Health();
 
-    public void has_Moved()
-    {
-        has_moved = true;
-    }
+    public abstract void has_Moved();
 
-    public void has_Not_Moved()
-    {
-        has_moved = false;
-    }
+    public abstract int get_Attack_Range();
 
-    public bool has_It_Moved()
-    {
-        return has_moved;
-    }
+    public abstract void set_Class_Selected();
+
+    public abstract int get_Damage();
+
+    public abstract string get_Class();
+
+    public abstract int get_Distance_Can_Move();
+
+    public abstract bool is_Class_Selected();
+
+    public abstract void has_Not_Moved();
+
+    public abstract bool has_It_Moved();
+
+    internal abstract void MoveToPosition(Vector3 destination);
   
     // Start is called before the first frame update
     void Start()
@@ -118,25 +85,13 @@ public class Unit_Base_Class : MonoBehaviour
 
             case Unit_State.Stationary:
 
+                my_animator.SetBool("is_walking", false);
+
                 break;
 
             case Unit_State.Attacking:
 
                 break;
         } 
-    }
-
-    internal void MoveToPosition(Vector3 destination)
-    {
-        if (currently == Unit_State.Stationary)
-        {
-            currently = Unit_State.Moving;
-            my_animator.SetBool("is_walking", true);
-            my_starting_position = transform.position;
-            transform.LookAt(destination);
-            my_destination = destination;
-            timer = 0f;
-            has_moved = true;
-        }
     }
 }

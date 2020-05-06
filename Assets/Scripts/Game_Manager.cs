@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Game_Manager : MonoBehaviour
 {
-    Game_Board the_board;
-    Unit_Base_Class currently_selected_unit;
-    Unit_Base_Class[] all_units;
-    enum Manager_States { Setting_Up, Player_1_Turn, Player_2_Turn }
-    Manager_States current = Manager_States.Setting_Up;
-    Ray ray;
-    RaycastHit hit;
-    Unit_Base_Class target_Unit;
-    private float distance_To_Destination;
-    private float distance_To_Target;
-    private int damage_Modifier;
-    private bool reset = false;
-    ClassSelectUI myClassSelectUI;
-    UI_Class ui_Class;
-    private int state = 0;
+    protected Game_Board the_board;
+    protected Unit_Base_Class currently_selected_unit;
+    protected Unit_Base_Class[] all_units;
+    protected enum Manager_States { Setting_Up, Player_1_Turn, Player_2_Turn }
+    protected Manager_States current = Manager_States.Setting_Up;
+    protected Ray ray;
+    protected RaycastHit hit;
+    protected Unit_Base_Class target_Unit;
+    protected float distance_To_Destination;
+    protected float distance_To_Target;
+    protected int damage_Modifier;
+    protected bool reset = false;
+    protected ClassSelectUI myClassSelectUI;
+    protected UI_Class ui_Class;
+    protected int state = 0;
 
 
     // Start is called before the first frame update
@@ -68,7 +68,7 @@ public class Game_Manager : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if(!currently_selected_unit.class_Selected)
+            if(!currently_selected_unit.is_Class_Selected())
             {
                 myClassSelectUI = FindObjectOfType<ClassSelectUI>();
 
@@ -98,7 +98,7 @@ public class Game_Manager : MonoBehaviour
                     distance_To_Destination = Vector3.Distance(selected_cell.transform.position, currently_selected_unit.transform.position);
                     Debug.Log("Distance: " + distance_To_Destination);
 
-                    if ((distance_To_Destination <= currently_selected_unit.distance_can_move) && currently_selected_unit.has_It_Moved() == false)
+                    if ((distance_To_Destination <= currently_selected_unit.get_Distance_Can_Move()) && currently_selected_unit.has_It_Moved() == false)
                     {
                         currently_selected_unit.MoveToPosition(selected_cell.unit_position());
                         selected_cell.highlight();
@@ -125,9 +125,9 @@ public class Game_Manager : MonoBehaviour
                     damage_Modifier = Random.Range(5, 10);
                     distance_To_Target = Vector3.Distance(currently_selected_unit.transform.position, target_Unit.transform.position);
 
-                    if(distance_To_Target <= currently_selected_unit.attack_Range)
+                    if(distance_To_Target <= currently_selected_unit.get_Attack_Range())
                     {
-                        if(currently_selected_unit.unit_class == "Range")
+                        if(currently_selected_unit.get_Class() == "Range")
                         {
                             if(distance_To_Target < 2)
                             {
@@ -136,7 +136,7 @@ public class Game_Manager : MonoBehaviour
 
                             else
                             {
-                                target_Unit.set_Health(-(currently_selected_unit.damage + damage_Modifier));
+                                target_Unit.set_Health(-(currently_selected_unit.get_Damage() + damage_Modifier));
                                 print("That's a lot of damage!");
                             }
                         }
@@ -144,7 +144,7 @@ public class Game_Manager : MonoBehaviour
                         else
                         {
                             //Class is not range
-                            target_Unit.set_Health(-(currently_selected_unit.damage + damage_Modifier));
+                            target_Unit.set_Health(-(currently_selected_unit.get_Damage() + damage_Modifier));
                             print("That's a lot of damage!");
                         }
                     }
@@ -198,22 +198,22 @@ public class Game_Manager : MonoBehaviour
 
     public void choseNormalClass()
     {
-        currently_selected_unit.normal_Class();
+        currently_selected_unit.Set_Normal();
 
-        currently_selected_unit.class_Selected = true;
+        currently_selected_unit.set_Class_Selected();
     }
 
     public void choseRangeClass()
     {
-        currently_selected_unit.range_Class();
+        currently_selected_unit.Set_Ranged();
 
-        currently_selected_unit.class_Selected = true;
+        currently_selected_unit.set_Class_Selected();
     }
 
     public void choseHeavyClass()
     {
-        currently_selected_unit.heavy_Class();
+        currently_selected_unit.Set_Heavy();
 
-        currently_selected_unit.class_Selected = true;
+        currently_selected_unit.set_Class_Selected();
     }
 }
