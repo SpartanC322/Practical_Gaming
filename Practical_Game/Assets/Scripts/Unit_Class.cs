@@ -31,9 +31,9 @@ public class Unit_Class : Unit_Base_Class
         unit_class = "Ranged";
     }
 
-    public override void set_Player_2()
+    public override void set_Player_2(bool yes_or_no)
     {
-        player_2 = true;
+        player_2 = yes_or_no;
     }
 
     public override bool get_Player_2()
@@ -53,17 +53,17 @@ public class Unit_Class : Unit_Base_Class
 
     public override void has_Moved()
     {
-        has_moved = true;
+        can_moved = true;
     }
 
     public override void has_Not_Moved()
     {
-        has_moved = false;
+        can_moved = false;
     }
 
     public override bool has_It_Moved()
     {
-        return has_moved;
+        return can_moved;
     }
 
     public override int get_Attack_Range()
@@ -106,7 +106,7 @@ public class Unit_Class : Unit_Base_Class
             transform.LookAt(destination);
             my_destination = destination;
             timer = 0f;
-            has_moved = true;
+            can_moved = true;
         }
     }
 }

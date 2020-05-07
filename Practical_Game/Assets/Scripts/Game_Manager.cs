@@ -5,15 +5,15 @@ using UnityEngine;
 public class Game_Manager : MonoBehaviour
 {
     protected Game_Board the_board;
-    protected Unit_Base_Class currently_selected_unit;
-    protected Unit_Base_Class[] all_units;
+    protected Unit_Class currently_selected_unit;
+    protected Unit_Class[] all_units;
     protected List<GameObject> player_1_Units = new List<GameObject>();
     protected List<GameObject> player_2_Units = new List<GameObject>();
     protected enum Manager_States { Setting_Up, Player_1_Turn, Player_2_Turn }
     protected Manager_States current = Manager_States.Setting_Up;
     protected Ray ray;
     protected RaycastHit hit;
-    protected Unit_Base_Class target_Unit;
+    protected Unit_Class target_Unit;
     protected float distance_To_Destination;
     protected float distance_To_Target;
     protected int damage_Modifier;
@@ -23,13 +23,14 @@ public class Game_Manager : MonoBehaviour
     protected int state = 0;
     protected int number_of_units_wanted = 5;
     protected bool has_been_setup = false;
+    protected bool is_player_2;
 
 
     // Start is called before the first frame update
     void Start()
     {
         ui_Class = FindObjectOfType<UI_Class>();
-        currently_selected_unit = FindObjectOfType<Unit_Base_Class>();
+        currently_selected_unit = FindObjectOfType<Unit_Class>();
         the_board = new Game_Board();
 
         myClassSelectUI = FindObjectOfType<ClassSelectUI>();
@@ -52,7 +53,7 @@ public class Game_Manager : MonoBehaviour
                 }
                 Debug.Log(current);
             
-                all_units = FindObjectsOfType<Unit_Base_Class>();
+                all_units = FindObjectsOfType<Unit_Class>();
 
                 reset = true;
                 
@@ -78,18 +79,27 @@ public class Game_Manager : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if(!currently_selected_unit.is_Class_Selected())
+            if(currently_selected_unit.is_Class_Selected() == false)
             {
-                myClassSelectUI = FindObjectOfType<ClassSelectUI>();
+                if((get_state() == 1) && (currently_selected_unit.get_Player_2() == false))
+                {
+                    myClassSelectUI = FindObjectOfType<ClassSelectUI>();
 
-                myClassSelectUI.showUI();
+                    myClassSelectUI.showUI();
+                }
+                if((get_state() == 2 && (currently_selected_unit.get_Player_2() == true)))
+                {
+                    myClassSelectUI = FindObjectOfType<ClassSelectUI>();
+
+                    myClassSelectUI.showUI();
+                }
             }
 
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                Unit_Base_Class unit_selected = hit.transform.GetComponent<Unit_Base_Class>();
+                Unit_Class unit_selected = hit.transform.GetComponent<Unit_Class>();
                 if (unit_selected)
                 {
                     if (currently_selected_unit.get_Player_2() == false && state == 1)
@@ -125,12 +135,12 @@ public class Game_Manager : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit))
         {
-            target_Unit = hit.collider.GetComponent<Unit_Base_Class>();
+            target_Unit = hit.collider.GetComponent<Unit_Class>();
 
             if (Input.GetMouseButtonDown(1))
                 //MouseButton 1 is a right click
             {
-                if(target_Unit.GetComponent<Unit_Base_Class>() != null)
+                if(target_Unit.GetComponent<Unit_Class>() != null)
                 {
                     damage_Modifier = Random.Range(5, 10);
                     distance_To_Target = Vector3.Distance(currently_selected_unit.transform.position, target_Unit.transform.position);
@@ -188,7 +198,7 @@ public class Game_Manager : MonoBehaviour
     {
         if (reset == true)
         {
-            foreach (Unit_Base_Class unit in all_units)
+            foreach (Unit_Class unit in all_units)
                 {
                     unit.has_Not_Moved();
                 }
@@ -229,9 +239,12 @@ public class Game_Manager : MonoBehaviour
 
     public void setup_Player_1()
     {
-        for (int i = 0; i < number_of_units_wanted; i++)
+        for (int i = 0; i < (number_of_units_wanted-1); i++)
         {
-            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i, 1, 0), Quaternion.identity) as GameObject;
+            is_player_2 = false;
+            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i+1, 1, 0), Quaternion.identity) as GameObject;
+            player_1_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
+            player_1_Unit.AddComponent<Unit_Class>();
             player_1_Units.Add(player_1_Unit);
         }
     }
@@ -240,9 +253,10 @@ public class Game_Manager : MonoBehaviour
     {
         for (int i = 0; i < number_of_units_wanted; i++)
         {
+            is_player_2 = true;
             GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length()-1)-i, 1, (the_board.get_Width()-1)), Quaternion.identity) as GameObject;
+            player_2_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
             player_2_Units.Add(player_2_Unit);
-            player_2_Unit.GetComponent<Unit_Class>().set_Player_2();
         }
     }
 }

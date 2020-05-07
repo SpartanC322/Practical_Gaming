@@ -7,7 +7,7 @@ public interface Unit_Interface
     void Set_Heavy();
     void Set_Normal();
     void Set_Ranged();
-    void set_Player_2();
+    void set_Player_2(bool yes_or_no);
     bool get_Player_2();
     void set_Health(int new_Health);
     int get_Health();

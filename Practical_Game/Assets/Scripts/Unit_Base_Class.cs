@@ -13,7 +13,7 @@ public abstract class Unit_Base_Class : MonoBehaviour, Unit_Interface
     protected float move_time = 1.5f;
     protected bool player_2;
     protected bool class_Is_Selected = false;
-    protected bool has_moved = true;
+    protected bool can_moved = true;
     protected int health = 100;
     protected int damage;
     protected int distance_can_move;
@@ -26,7 +26,7 @@ public abstract class Unit_Base_Class : MonoBehaviour, Unit_Interface
 
     public abstract void Set_Ranged();
     
-    public abstract void set_Player_2();
+    public abstract void set_Player_2(bool yes_or_no);
 
     public abstract bool get_Player_2();
 
