@@ -172,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 444087119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef180396ade566947b16c0532964d5ed, type: 3}
+  m_Script: {fileID: 11500000, guid: b834713dec1234c998e242d6e7596e19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &464551617
@@ -808,6 +808,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -820,6 +821,7 @@ SkinnedMeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

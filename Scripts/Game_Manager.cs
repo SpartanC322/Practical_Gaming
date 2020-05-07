@@ -7,6 +7,8 @@ public class Game_Manager : MonoBehaviour
     protected Game_Board the_board;
     protected Unit_Base_Class currently_selected_unit;
     protected Unit_Base_Class[] all_units;
+    protected List<GameObject> player_1_Units = new List<GameObject>();
+    protected List<GameObject> player_2_Units = new List<GameObject>();
     protected enum Manager_States { Setting_Up, Player_1_Turn, Player_2_Turn }
     protected Manager_States current = Manager_States.Setting_Up;
     protected Ray ray;
@@ -19,6 +21,8 @@ public class Game_Manager : MonoBehaviour
     protected ClassSelectUI myClassSelectUI;
     protected UI_Class ui_Class;
     protected int state = 0;
+    protected int number_of_units_wanted = 5;
+    protected bool has_been_setup = false;
 
 
     // Start is called before the first frame update
@@ -40,6 +44,12 @@ public class Game_Manager : MonoBehaviour
         {
             case Manager_States.Setting_Up:
 
+                if(has_been_setup == false)
+                {
+                    setup_Player_1();
+                    setup_Player_2();
+                    has_been_setup = true;
+                }
                 Debug.Log(current);
             
                 all_units = FindObjectsOfType<Unit_Base_Class>();
@@ -215,5 +225,24 @@ public class Game_Manager : MonoBehaviour
         currently_selected_unit.Set_Heavy();
 
         currently_selected_unit.set_Class_Selected();
+    }
+
+    public void setup_Player_1()
+    {
+        for (int i = 0; i < number_of_units_wanted; i++)
+        {
+            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i, 1, 0), Quaternion.identity) as GameObject;
+            player_1_Units.Add(player_1_Unit);
+        }
+    }
+
+    public void setup_Player_2()
+    {
+        for (int i = 0; i < number_of_units_wanted; i++)
+        {
+            GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length()-1)-i, 1, (the_board.get_Width()-1)), Quaternion.identity) as GameObject;
+            player_2_Units.Add(player_2_Unit);
+            player_2_Unit.GetComponent<Unit_Class>().set_Player_2();
+        }
     }
 }

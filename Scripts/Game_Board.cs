@@ -31,4 +31,14 @@ public class Game_Board
     {
         return new Vector3(i, 0, j);
     }
+
+    public int get_Width()
+    {
+        return BOARD_WIDTH;
+    }
+
+    public int get_Length()
+    {
+        return BOARD_LENGTH;
+    }
 }
