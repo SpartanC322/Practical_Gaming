@@ -1730,6 +1730,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Avatar
       value: 
+      objectReference: {fileID: 9000000, guid: 45d480461bbdc704587e117329ce8e69, type: 3}
+    - target: {fileID: 1888644258893041461, guid: 8c4a30dfb1588904f954309c212e4d26,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888644258893041461, guid: 8c4a30dfb1588904f954309c212e4d26,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1972751040694455451, guid: 8c4a30dfb1588904f954309c212e4d26,
         type: 3}
