@@ -14,8 +14,6 @@ public class Camera_Manager : MonoBehaviour
     void Start()
     {
         my_camera = FindObjectOfType<Camera_Control_Test>();
-
-        my_camera.follow(this);
     }
 
     // Update is called once per frame
