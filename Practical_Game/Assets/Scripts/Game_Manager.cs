@@ -243,7 +243,12 @@ public class Game_Manager : MonoBehaviour
         for (int i = 0; i < (number_of_units_wanted - 2); i++)
         {
             is_player_2 = false;
+<<<<<<< refs/remotes/origin/master
             GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i + 2, 0.5f, 0), Quaternion.identity) as GameObject;
+=======
+            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i+1, 0.5f, 0), Quaternion.identity) as GameObject;
+            player_1_Unit.AddComponent<Unit_Class>();
+>>>>>>> 1
             player_1_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
             Unit_Animation = Resources.Load("Unit_Animation") as Animator;
             Unit_Animation = player_1_Unit.AddComponent<Animator>();
@@ -256,7 +261,12 @@ public class Game_Manager : MonoBehaviour
         for (int i = 0; i < number_of_units_wanted; i++)
         {
             is_player_2 = true;
+<<<<<<< refs/remotes/origin/master
             GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length() - 1) - i, 0.5f, (the_board.get_Width() - 1)), Quaternion.identity) as GameObject;
+=======
+            GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length()-1)-i, 0.5f, (the_board.get_Width()-1)), Quaternion.identity) as GameObject;
+            player_2_Unit.AddComponent<Unit_Class>();
+>>>>>>> 1
             player_2_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
             Unit_Animation = Resources.Load("Unit_Animation") as Animator;
             Unit_Animation = player_2_Unit.AddComponent<Animator>();
