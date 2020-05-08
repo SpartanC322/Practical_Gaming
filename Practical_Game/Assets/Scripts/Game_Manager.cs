@@ -24,6 +24,7 @@ public class Game_Manager : MonoBehaviour
     protected int number_of_units_wanted = 5;
     protected bool has_been_setup = false;
     protected bool is_player_2;
+    protected Animator Unit_Animation;
 
 
     // Start is called before the first frame update
@@ -41,22 +42,22 @@ public class Game_Manager : MonoBehaviour
     {
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        switch(current)
+        switch (current)
         {
             case Manager_States.Setting_Up:
 
-                if(has_been_setup == false)
+                if (has_been_setup == false)
                 {
                     setup_Player_1();
                     setup_Player_2();
                     has_been_setup = true;
                 }
                 Debug.Log(current);
-            
+
                 all_units = FindObjectsOfType<Unit_Class>();
 
                 reset = true;
-                
+
                 reset_All_Units();
 
                 state = 1;
@@ -79,15 +80,15 @@ public class Game_Manager : MonoBehaviour
         }
         if (Input.GetMouseButtonUp(0))
         {
-            if(currently_selected_unit.is_Class_Selected() == false)
+            if (currently_selected_unit.is_Class_Selected() == false)
             {
-                if((get_state() == 1) && (currently_selected_unit.get_Player_2() == false))
+                if ((get_state() == 1) && (currently_selected_unit.get_Player_2() == false))
                 {
                     myClassSelectUI = FindObjectOfType<ClassSelectUI>();
 
                     myClassSelectUI.showUI();
                 }
-                if((get_state() == 2 && (currently_selected_unit.get_Player_2() == true)))
+                if ((get_state() == 2 && (currently_selected_unit.get_Player_2() == true)))
                 {
                     myClassSelectUI = FindObjectOfType<ClassSelectUI>();
 
@@ -112,7 +113,7 @@ public class Game_Manager : MonoBehaviour
                     }
                 }
 
-                Board_Position selected_cell =  hit.transform.GetComponent<Board_Position>();
+                Board_Position selected_cell = hit.transform.GetComponent<Board_Position>();
                 if (selected_cell)
                 {
                     distance_To_Destination = Vector3.Distance(selected_cell.transform.position, currently_selected_unit.transform.position);
@@ -128,8 +129,8 @@ public class Game_Manager : MonoBehaviour
                     else
                     {
                         Debug.Log("Too far");
-                    }   
-                }     
+                    }
+                }
             }
         }
 
@@ -138,18 +139,18 @@ public class Game_Manager : MonoBehaviour
             target_Unit = hit.collider.GetComponent<Unit_Class>();
 
             if (Input.GetMouseButtonDown(1))
-                //MouseButton 1 is a right click
+            //MouseButton 1 is a right click
             {
-                if(target_Unit.GetComponent<Unit_Class>() != null)
+                if (target_Unit.GetComponent<Unit_Class>() != null)
                 {
                     damage_Modifier = Random.Range(5, 10);
                     distance_To_Target = Vector3.Distance(currently_selected_unit.transform.position, target_Unit.transform.position);
 
-                    if(distance_To_Target <= currently_selected_unit.get_Attack_Range())
+                    if (distance_To_Target <= currently_selected_unit.get_Attack_Range())
                     {
-                        if(currently_selected_unit.get_Class() == "Range")
+                        if (currently_selected_unit.get_Class() == "Range")
                         {
-                            if(distance_To_Target < 2)
+                            if (distance_To_Target < 2)
                             {
                                 print("Ranger is too close");
                             }
@@ -199,9 +200,9 @@ public class Game_Manager : MonoBehaviour
         if (reset == true)
         {
             foreach (Unit_Class unit in all_units)
-                {
-                    unit.has_Not_Moved();
-                }
+            {
+                unit.has_Not_Moved();
+            }
             reset = false;
         }
     }
@@ -239,12 +240,14 @@ public class Game_Manager : MonoBehaviour
 
     public void setup_Player_1()
     {
-        for (int i = 0; i < (number_of_units_wanted-1); i++)
+        for (int i = 0; i < (number_of_units_wanted - 2); i++)
         {
             is_player_2 = false;
-            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i+1, 1, 0), Quaternion.identity) as GameObject;
-            player_1_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
+            GameObject player_1_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3(i + 2, 0.5f, 0), Quaternion.identity) as GameObject;
             player_1_Unit.AddComponent<Unit_Class>();
+            player_1_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
+            Unit_Animation = Resources.Load("Unit_Animation") as Animator;
+            Unit_Animation = player_1_Unit.AddComponent<Animator>();
             player_1_Units.Add(player_1_Unit);
         }
     }
@@ -254,8 +257,12 @@ public class Game_Manager : MonoBehaviour
         for (int i = 0; i < number_of_units_wanted; i++)
         {
             is_player_2 = true;
-            GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length()-1)-i, 1, (the_board.get_Width()-1)), Quaternion.identity) as GameObject;
+            GameObject player_2_Unit = Instantiate(Resources.Load("Prefabs/Unit"), new Vector3((the_board.get_Length() - 1) - i, 0.5f, (the_board.get_Width() - 1)), Quaternion.identity) as GameObject;
+            player_2_Unit.AddComponent<Unit_Class>();
             player_2_Unit.GetComponent<Unit_Class>().set_Player_2(is_player_2);
+            Unit_Animation = Resources.Load("Unit_Animation") as Animator;
+            Unit_Animation = player_2_Unit.AddComponent<Animator>();
+            player_2_Unit.transform.Rotate(0f, 180f, 0f);
             player_2_Units.Add(player_2_Unit);
         }
     }

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game_Board
+public class Game_Board : MonoBehaviour
 {
     Board_Position[,] the_board;
-    private int BOARD_WIDTH = 50;
-    private int BOARD_LENGTH = 50;
+    private int BOARD_WIDTH = 20;
+    private int BOARD_LENGTH = 20;
 
     public Game_Board()
     {
@@ -14,10 +14,8 @@ public class Game_Board
         for (int i = 0; i < BOARD_WIDTH; i++)
             for (int j = 0; j < BOARD_LENGTH; j++)
             {
-                GameObject the_ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                the_ground.transform.position = get_tile_position(i, j);
+                GameObject the_ground = Instantiate(Resources.Load("Prefabs/Tile"), new Vector3(i, 0, j), Quaternion.identity) as GameObject;
                 Board_Position new_ground = the_ground.AddComponent<Board_Position>();
-                the_board[i, j] = new_ground;
                 new_ground.you_are_at(i, j, this);
             }
     }
